@@ -6,17 +6,17 @@ require_relative "../lib/robot"
 class TestRobot < Minitest::Test
   parallelize_me!
 
-  def test_place
-    assert_nil Robot.place(nil)
-    assert_nil Robot.place(Position.new(-1, 0, :west))
-    assert_nil Robot.place(Position.new(0, -1, :west))
-    assert_nil Robot.place(Position.new(5, 0, :west))
-    assert_nil Robot.place(Position.new(0, 5, :west))
-    assert_nil Robot.place(Position.new(0, 0, :whatever))
+  def test_validate
+    refute Robot.valid_position?(nil)
+    refute Robot.valid_position?(Position.new(-1, 0, :west))
+    refute Robot.valid_position?(Position.new(0, -1, :west))
+    refute Robot.valid_position?(Position.new(5, 0, :west))
+    refute Robot.valid_position?(Position.new(0, 5, :west))
+    refute Robot.valid_position?(Position.new(0, 0, :whatever))
 
-    assert_equal Position.new(0, 0, :north), Robot.place(Position.new(0, 0, :north))
-    assert_equal Position.new(0, 4, :north), Robot.place(Position.new(0, 4, :north))
-    assert_equal Position.new(4, 0, :north), Robot.place(Position.new(4, 0, :north))
+    assert Robot.valid_position?(Position.new(0, 0, :north))
+    assert Robot.valid_position?(Position.new(0, 4, :north))
+    assert Robot.valid_position?(Position.new(4, 0, :north))
   end
 
   def test_move

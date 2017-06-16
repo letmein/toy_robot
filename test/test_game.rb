@@ -6,7 +6,6 @@ require_relative "../lib/game"
 
 class TestGame < Minitest::Test
   def test_play_acceptance_a
-    path = Path.new
     output = StringIO.new
     input = StringIO.new <<~EOF
       PLACE 0,0,NORTH
@@ -17,14 +16,13 @@ class TestGame < Minitest::Test
       0, 1, NORTH
     EOF
 
-    game = Game.new(path, input, output)
+    game = Game.new(input, output)
     game.play
 
     assert_equal expected_output, output.string
   end
 
   def test_play_acceptance_b
-    path = Path.new
     output = StringIO.new
     input = StringIO.new <<~EOF
       PLACE 0,0,NORTH
@@ -35,14 +33,13 @@ class TestGame < Minitest::Test
       0, 0, WEST
     EOF
 
-    game = Game.new(path, input, output)
+    game = Game.new(input, output)
     game.play
 
     assert_equal expected_output, output.string
   end
 
   def test_play_acceptance_c
-    path = Path.new
     output = StringIO.new
     input = StringIO.new <<~EOF
       PLACE 1,2,EAST
@@ -56,14 +53,13 @@ class TestGame < Minitest::Test
       3, 3, NORTH
     EOF
 
-    game = Game.new(path, input, output)
+    game = Game.new(input, output)
     game.play
 
     assert_equal expected_output, output.string
   end
 
   def test_play_hardcore
-    path = Path.new
     output = StringIO.new
     input = StringIO.new <<~EOF
       LEFT
@@ -95,7 +91,7 @@ class TestGame < Minitest::Test
       3, 0, SOUTH
     EOF
 
-    game = Game.new(path, input, output)
+    game = Game.new(input, output)
     game.play
 
     assert_equal expected_output, output.string

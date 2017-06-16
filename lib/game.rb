@@ -1,8 +1,7 @@
 require_relative "./robot"
-require_relative "./path"
 
 class Game
-  def initialize(path, input, output)
+  def initialize(input, output, path = [])
     @path = path
     @input = input
     @output = output
@@ -13,25 +12,33 @@ class Game
       command = line.upcase
       case command
       when /PLACE\s\w+/
-        @path << parse_position(command)
+        place parse_position(command)
       when /MOVE\s/
-        @path << Robot.move(@path.current_position)
+        place Robot.move(current_position)
       when /LEFT\s/
-        @path << Robot.left(@path.current_position)
+        place Robot.left(current_position)
       when /RIGHT\s/
-        @path << Robot.right(@path.current_position)
+        place Robot.right(current_position)
       when /REPORT\s/
-        write @path.current_position.inspect
+        write current_position.inspect
       when /PATH\s/
-        write @path.to_a.map(&:inspect).join("\n")
+        write @path.map(&:inspect).join("\n")
       else
         write "unknown command"
       end
     end
-    @path.to_a
+    @path
   end
 
   private
+
+  def current_position
+    @path.last
+  end
+
+  def place(position)
+    @path << position if Robot.valid_position?(position)
+  end
 
   def write(str)
     @output.write("#{str}\n")

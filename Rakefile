@@ -8,8 +8,7 @@ end
 desc "Start the game"
 task :play do
   require_relative "lib/game"
-  path = Path.new
-  game = Game.new(path, $stdin, $stdout)
+  game = Game.new($stdin, $stdout)
   puts "Available commands: PLACE x,y,facing | MOVE | LEFT | RIGHT | REPORT | PATH"
   puts "Press Ctrl+C to exit"
   game.play

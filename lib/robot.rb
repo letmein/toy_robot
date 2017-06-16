@@ -8,12 +8,11 @@ module Robot
   NORTH = :north
   SOUTH = :south
 
-  def self.place(position)
-    return unless position
-    return unless (0..MAX_X).member?(position.x)
-    return unless (0..MAX_Y).member?(position.y)
-    return unless [WEST, EAST, NORTH, SOUTH].member?(position.facing)
-    position
+  def self.valid_position?(position)
+    position &&
+    (0..MAX_X).member?(position.x) &&
+      (0..MAX_Y).member?(position.y) &&
+      [WEST, EAST, NORTH, SOUTH].member?(position.facing)
   end
 
   def self.move(position)
